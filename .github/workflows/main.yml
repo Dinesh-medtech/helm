@@ -40,4 +40,4 @@ jobs:
             --namespace your-namespace \
             --set image.repository=your-image-repo \
             --set image.tag=latest \
-            --set openaiApiKey=${{ secrets.OPENAI_API_KEY }}  # Example of setting an environment variable
+        # helm upgrade --install my-app ./my-app --set image.tag=${{ github.sha }}

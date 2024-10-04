@@ -1,0 +1,43 @@
+name: Deploy with Helm
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'  
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name cluster-name
+
+      # - name: Install Helm
+      #   run: |
+      #     curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install release-name ./path/to/your/chart \
+            --namespace your-namespace \
+            --set image.repository=your-image-repo \
+            --set image.tag=latest \
+            --set openaiApiKey=${{ secrets.OPENAI_API_KEY }}  # Example of setting an environment variable

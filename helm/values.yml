@@ -1,0 +1,27 @@
+replicaCount: 1
+
+app:
+  name: acabot-api-dev
+  containerName: acabot-api-container
+  port: 5000
+
+image:
+  repository: 992382671809.dkr.ecr.us-east-1.amazonaws.com/acabot-api-dev
+  tag: "local"
+
+env:
+
+
+service:
+  enabled: true
+  name: acabot-api-dev
+  type: ClusterIP
+  port: 80           # The external port
+  targetPort: 5000   # The internal port
+
+ingress:
+  enabled: false
+  host: dev-api.healthplans.chat
+  path: /
+  serviceUI:
+    path: /acabot-api-dev

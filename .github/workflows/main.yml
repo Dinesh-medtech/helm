@@ -14,10 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-        with:
-          version: 'latest'
+      # - name: Set up kubectl
+      #   uses: azure/setup-kubectl@v1
+      #   with:
+      #     version: 'latest'
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -36,8 +36,8 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install release-name ./path/to/your/chart \
-            --namespace your-namespace \
-            --set image.repository=your-image-repo \
-            --set image.tag=latest \
-        # helm upgrade --install my-app ./my-app --set image.tag=${{ github.sha }}
+          helm upgrade --install release-name ./helm \
+        #     --namespace your-namespace \
+        #     --set image.repository=your-image-repo \
+        #     --set image.tag=latest \
+        # # helm upgrade --install my-app ./my-app --set image.tag=${{ github.sha }}

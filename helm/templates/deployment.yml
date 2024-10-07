@@ -1,21 +1,21 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1                   # API version for the Deployment resource
+kind: Deployment                      # Specifies this resource is a Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}            # The name of the Deployment, dynamically set by Helm release
   labels:
-    app: {{ .Release.Name }}
+    app: {{ .Release.Name }}           # Label for the app, set to Helm release name
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount }} # Number of pod replicas, configurable from values.yaml
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: {{ .Release.Name }}         # Selector to match Pods with the same app label
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: {{ .Release.Name }}       # Labels for the Pod template, matching the app label
     spec:
       containers:
-      - name: {{ .Release.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+      - name: {{ .Release.Name }}      # Container name, dynamically set by Helm release name
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"  # Container image and tag, from values.yaml
         ports:
-        - containerPort: 80
+        - containerPort: 80            # Expose port 80 in the container

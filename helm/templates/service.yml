@@ -1,11 +1,11 @@
-apiVersion: v1
-kind: Service
+apiVersion: v1                        # API version for the Service resource
+kind: Service                         # Specifies this resource is a Service
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}            # The name of the Service, dynamically set by Helm release
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service.type }}     # Type of the service (ClusterIP, NodePort, LoadBalancer), from values.yaml
   ports:
-    - port: {{ .Values.service.port }}        # Service port (80)
-      targetPort: {{ .Values.service.targetPort }}  # Container's target port
+    - port: {{ .Values.service.port }} # The port the service exposes, configurable from values.yaml
+      targetPort: {{ .Values.service.targetPort }}  # The container port the traffic is directed to, from values.yaml
   selector:
-    app: {{ .Release.Name }}
+    app: {{ .Release.Name }}           # Selector to link the service to Pods with the same app label
